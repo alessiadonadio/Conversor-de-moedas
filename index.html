@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Conversor de Moedas</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f0f0f0;
+      text-align: center;
+      padding: 50px;
+      background-image: url('img/cartas-e-fichas-de-casino_1031776-60721.avif'); 
+    }
+
+    h1 {
+      color: #333;
+    }
+
+    .container {
+      background: rgb(243, 162, 162);
+      padding: 30px;
+      border-radius: 10px;
+      display: inline-block;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+
+    input, select, button {
+      margin: 10px;
+      padding: 10px;
+      font-size: 16px;
+      width: 80%;
+      max-width: 300px;
+    }
+
+    #resultado {
+      margin-top: 20px;
+      font-weight: bold;
+      color: green;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <h1>Conversor de Moedas</h1>
+    <input type="number" id="valor" placeholder="Digite o valor">
+
+    <br>
+
+    <select id="de">
+      <option value="BRL">Real (BRL)</option>
+      <option value="USD">Dólar (USD)</option>
+      <option value="EUR">Euro (EUR)</option>
+      <option value="JPY">Iene (JPY)</option>
+      <option value="KRW">Won (KRW)</option>
+    </select>
+
+    <select id="para">
+      <option value="USD">Dólar (USD)</option>
+      <option value="BRL">Real (BRL)</option>
+      <option value="EUR">Euro (EUR)</option>
+      <option value="JPY">Iene (JPY)</option>
+      <option value="KRW">Won (KRW)</option>
+    </select>
+
+    <br>
+
+    <button onclick="converter()">Converter</button>
+
+    <div id="resultado"></div>
+  </div>
+
+  <script>
+    const taxas = {
+      "BRL": { "USD": 0.20, "EUR": 0.18, "JPY": 30.00, "KRW": 270.00, "BRL": 1 },
+      "USD": { "BRL": 5.00, "EUR": 0.90, "JPY": 150.00, "KRW": 1300.00, "USD": 1 },
+      "EUR": { "BRL": 5.50, "USD": 1.10, "JPY": 165.00, "KRW": 1400.00, "EUR": 1 },
+      "JPY": { "BRL": 0.033, "USD": 0.0067, "EUR": 0.006, "KRW": 8.50, "JPY": 1 },
+      "KRW": { "BRL": 0.0037, "USD": 0.00077, "EUR": 0.00071, "JPY": 0.12, "KRW": 1 },
+    };
+
+    function converter() {
+      let valor = parseFloat(document.getElementById("valor").value);
+      let de = document.getElementById("de").value;
+      let para = document.getElementById("para").value;
+
+      if (isNaN(valor)) {
+        document.getElementById("resultado").innerText = "Por favor, insira um valor válido.";
+        return;
+      }
+
+      let taxa = taxas[de][para];
+      let convertido = valor * taxa;
+
+      document.getElementById("resultado").innerText =
+        `${valor} ${de} = ${convertido.toFixed(2)} ${para}`;
+    }
+  </script>
+</body>
+</html>
